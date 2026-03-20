@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pesan Spesial Dandy 🌙</title>
+    <title>Sistem Permintaan Maaf Dandy v2.0 🤖🌙</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Quicksand:wght@500;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Montserrat:wght@400;700;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
     <style>
         :root {
-            --primary: #FFD700;
-            --secondary: #fff;
-            --bg: #0a0a0b;
-            --glass: rgba(255, 255, 255, 0.1);
+            --neon-gold: #FFD700;
+            --neon-blue: #00f3ff;
+            --neon-red: #ff0044;
+            --bg: #030305;
         }
 
         * {
@@ -25,135 +25,168 @@
         body {
             background-color: var(--bg);
             background-image: 
-                radial-gradient(circle at 20% 30%, #1a1a2e 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, #16213e 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, #1a1a2e 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, #16213e 0%, transparent 40%);
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             overflow: hidden;
             color: white;
+            position: relative;
+        }
+
+        /* Latar Belakang Partikel */
+        #particles-js {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none; opacity: 0.3;
         }
 
         .container {
             position: relative;
             z-index: 10;
             width: 90%;
-            max-width: 450px;
-        }
-
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 40px 30px;
+            max-width: 600px;
             text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: cardEntrance 0.8s ease-out;
         }
 
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .emoji-box {
-            font-size: 70px;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
+        /* Judul Glitch & Neon */
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--primary);
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: 
+                0 0 10px var(--neon-gold),
+                0 0 20px var(--neon-gold),
+                0 0 40px var(--neon-gold);
+            animation: glitch 2s infinite;
         }
 
-        .message-box {
-            background: rgba(0,0,0,0.3);
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 25px;
-            min-height: 100px;
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 10px var(--neon-gold); }
+            5% { text-shadow: 2px 2px 0 var(--neon-red), -2px -2px 0 var(--neon-blue); }
+            10% { text-shadow: -2px 2px 0 var(--neon-red), 2px -2px 0 var(--neon-blue); }
+            15% { text-shadow: 2px -2px 0 var(--neon-red), -2px 2px 0 var(--neon-blue); }
+        }
+
+        /* Teks Tipe (muncul satu per satu) */
+        .message-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         #text {
-            font-size: 16px;
+            font-size: 1.1rem;
             line-height: 1.6;
-            color: #eee;
+            color: #ddd;
+            font-weight: 400;
         }
 
+        .highlight {
+            color: var(--neon-gold);
+            font-weight: 700;
+        }
+
+        /* Grup Tombol */
         .btn-group {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             position: relative;
-            height: 80px; /* Ruang ekstra agar tombol lari tidak menabrak */
+            height: 100px; /* Ruang vertikal ekstra untuk tombol lari */
         }
 
         button {
-            padding: 12px 25px;
+            padding: 15px 40px;
             border-radius: 50px;
             border: none;
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 14px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.1s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
         }
 
+        /* Tombol IYA - Glowing */
         #yes {
             background: white;
             color: black;
             z-index: 10;
-            position: relative;
+            box-shadow: 0 0 15px white;
         }
 
+        #yes:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--neon-gold);
+            background: var(--neon-gold);
+        }
+
+        /* Tombol GAK - Lari-lari Super Cepat */
         #no {
-            background: #ff4757;
+            background: #ff0044;
             color: white;
             z-index: 5;
             position: relative; /* Berubah ke fixed via JS saat interaksi */
+            box-shadow: 0 0 15px #ff0044;
+        }
+
+        /* Tampilan Sukses */
+        .success-content {
+            animation: bounceIn 1s ease-out;
         }
 
         .success-content h1 {
             font-family: 'Caveat', cursive;
-            font-size: 45px;
-            color: var(--primary);
+            font-size: 5rem;
+            color: var(--neon-gold);
+            text-transform: none;
+            text-shadow: 0 0 20px var(--neon-gold);
         }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            80% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
     </style>
 </head>
 <body>
 
+    <div id="particles-js"></div>
+
     <div class="container">
-        <div class="card" id="mainCard">
-            <div class="emoji-box" id="emoji">🥺</div>
-            <h1 id="headline">MOHON MAAF LAHIR BATIN</h1>
+        <div id="mainContent">
+            <h1 id="headline">SISTEM MAAF DANDY v2.0</h1>
             
-            <div class="message-box">
+            <div class="message-box message-container">
                 <p id="text">
-                    Halo! Aku <b>Dandy Nugraha</b>.<br>
-                    Kalau aku ada salah yang disengaja atau nggak... <br>
-                    <b>Maafin aku ya?</b> ✨
+                    [INISIALISASI PERMINTAAN MAAF]...<br>
+                    Halo <span class="highlight">#UserOrangBaik</span>, aku <span class="highlight">Dandy Nugraha</span>.<br>
+                    Kalau aku ada salah (banyak kayaknya), dimaafin ya? 🙏✨<br>
+                    [AKSI DIBUTUHKAN]...
                 </p>
             </div>
 
             <div class="btn-group">
-                <button id="yes">IYA, MAAFIN ✨</button>
-                <button id="no">ENGGAK! 😤</button>
+                <button id="yes">SETUJU (IYA, MAAFIN) ✨</button>
+                <button id="no">TOLAK (ENGGAK!) 😤</button>
             </div>
         </div>
     </div>
@@ -162,72 +195,111 @@
         <source src="lagu.mp3" type="audio/mpeg">
     </audio>
 
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
     <script>
         const noBtn = document.getElementById('no');
         const yesBtn = document.getElementById('yes');
         const text = document.getElementById('text');
-        const emoji = document.getElementById('emoji');
-        const mainCard = document.getElementById('mainCard');
+        const mainContent = document.getElementById('mainContent');
         const bgm = document.getElementById('bgm');
 
-        // Play Musik
+        // Mainkan musik pada interaksi pertama
         document.body.addEventListener('click', () => {
             bgm.play().catch(() => {});
         }, { once: true });
 
-        const jokes = [
-            "Tega banget sih.. 😭",
-            "Dandy nangis loh.. 😭",
-            "Yakin nih? 😢",
-            "Nanti THR-nya hangus! 💸",
-            "Gak bakal bisa keklik wlee! 😜",
-            "Yah, kok ditolak? 😔"
+        // Pesan Mengejek Tombol Lari
+        const trolls = [
+            "Yakin? Sistem error loh! 😜",
+            "Yah, tombolnya lari sendiri. 🏃‍♂️",
+            "Nyerah aja, gak bakal bisa! 😂",
+            "Coba klik lagi, kalau bisa. 😉",
+            "Sistem Dandy mustahil ditolak!",
+            "Eits, ketipu! 😋"
         ];
 
-        const emojis = ["🥺", "😭", "😢", "😔", "😤"];
-
+        // Tombol "Gak" Lari Super Cepat
         function moveButton() {
-            // Ubah ke fixed hanya saat mulai lari
+            // Ubah ke position fixed hanya saat mulai dikejar
             noBtn.style.position = 'fixed';
+            noBtn.style.zIndex = "999";
             
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
+            // Jangkauan lari super cepat (mendekati pinggir layar)
+            const padding = 30;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
             
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
-            noBtn.style.zIndex = "999";
 
-            text.innerHTML = jokes[Math.floor(Math.random() * jokes.length)];
-            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            // Ganti pesan mengejek
+            text.innerHTML = `
+                <span style="color:red; font-weight:700;">[PERINGATAN SISTEM]</span><br>
+                Aksi ditolak. ${trolls[Math.floor(Math.random() * trolls.length)]}
+            `;
         }
 
+        // Lari saat didekati (desktop) atau disentuh (mobile)
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Cegah klik asli di mobile
             moveButton();
         });
 
+        // Tombol "Iya" - Sukses
         yesBtn.addEventListener('click', () => {
-            // Ledakan Konfeti
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            // Ledakan Konfeti Mewah
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-            mainCard.innerHTML = `
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+              var timeLeft = animationEnd - Date.now();
+              if (timeLeft <= 0) return clearInterval(interval);
+              var particleCount = 50 * (timeLeft / duration);
+              //confetti warna emas & putih
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }, colors: ['#ffffff', '#FFD700'] }));
+              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }, colors: ['#ffffff', '#FFD700'] }));
+            }, 250);
+
+            // Ganti isi Halaman
+            mainContent.innerHTML = `
                 <div class="success-content">
-                    <div style="font-size: 80px; animation: float 2s infinite">💖</div>
-                    <h1>Yeayy! Makasih!</h1>
-                    <p style="font-size: 18px; margin-top:10px;">
-                        Kamu emang yang terbaik!<br>
-                        Sekarang Dandy tenang lahir batin.<br><br>
-                        <span style="color: #FFD700">Selamat Lebaran! 🌙</span>
+                    <div style="font-size: 8rem; animation: float 2s infinite">🚀💖</div>
+                    <h1>Yeayy! TERIMA KASIH!</h1>
+                    <p style="font-family:'Montserrat'; font-size: 1.5rem; margin-top:20px; font-weight:700; text-shadow: 0 0 10px white;">
+                        Kamu emang kawan sejati! <br>
+                        Sekarang Dandy dimaafin lahir batin. <br><br>
+                        <span style="color: var(--neon-gold); font-size: 2rem; font-family:'Orbitron';">SELAMAT LEBARAN! 🌙</span>
                     </p>
-                    <button onclick="location.reload()" style="margin-top:25px; background:rgba(255,255,255,0.1); color:white; border:1px solid white;">Main Lagi</button>
+                    <button onclick="location.reload()" style="margin-top:40px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2); backdrop-filter:blur(5px);">Re-Inisialisasi Sistem</button>
                 </div>
             `;
         });
+
+        // Konfigurasi Partikel Background (Matrix style)
+        particlesJS("particles-js", {
+          "particles": {
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#ffffff" },
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.5, "random": false },
+            "size": { "value": 3, "random": true },
+            "line_linked": { "enable": true, "distance": 150, "color": "#FFD700", "opacity": 0.2, "width": 1 },
+            "move": { "enable": true, "speed": 1, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+          },
+          "interactivity": {
+            "detect_on": "canvas",
+            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }
+          },
+          "retina_detect": true
+        });
+
     </script>
 </body>
 </html>
