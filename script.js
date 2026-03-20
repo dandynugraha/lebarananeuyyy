@@ -1,47 +1,49 @@
-const SUPABASE_URL = "https://akqsdkdrrkakvsoedabs.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrcXNka2Rycmtha3Zzb2VkYWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMzUyMzcsImV4cCI6MjA4OTYxMTIzN30.D7U-K30-_P91orEvQkobX64_k1BVNhvqcqYUzImGGMY";
-
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const text = document.getElementById("text");
 const bgm = document.getElementById("bgm");
 
-// play lagu setelah klik (biar HP gak block)
+// Mulai musik saat interaksi pertama
 document.body.addEventListener("click", () => {
-  bgm.play();
-});
+  bgm.play().catch(() => {}); // Catch error kalau browser block
+}, { once: true });
 
 const kataKocak = [
-  "PLISSS 😭 jangan gitu dong",
-  "aku udah berubah 😭",
-  "aku janji gak ghosting 😭",
-  "yaudah aku nangis 😔",
-  "jahat banget sih 😭"
+  "Yakin? Aku nangis nih 😢",
+  "Tega banget sama Dandy..",
+  "Gak kasihan liat muka ini? 🥺",
+  "Klik 'Iya' dapet pahala loh!",
+  "Yah, kok gitu sih? 😔"
 ];
 
-noBtn.addEventListener("click", () => {
-  const btnWidth = noBtn.offsetWidth;
-  const btnHeight = noBtn.offsetHeight;
+// Tombol "Tidak" yang lari-lari
+noBtn.addEventListener("mouseover", moveButton); // Lari saat didekati mouse
+noBtn.addEventListener("click", moveButton);    // Lari saat diklik
 
-  const maxX = window.innerWidth - btnWidth;
-  const maxY = window.innerHeight - btnHeight;
-
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-
+function moveButton() {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 50);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 50);
+  
+  noBtn.style.position = "fixed"; // Biar lari ke seluruh layar
   noBtn.style.left = x + "px";
   noBtn.style.top = y + "px";
-
+  
   text.innerHTML = kataKocak[Math.floor(Math.random() * kataKocak.length)];
-});
+}
 
+// Tombol "Iya"
 yesBtn.addEventListener("click", () => {
-  document.body.innerHTML = `
-    <div style="text-align:center; margin-top:80px; color:white;">
-      <h1>🥹 Makasih ya!</h1>
-      <p>Kamu orang baik banget 😭</p>
-      <p>Semoga THR kamu deras 💸🔥</p>
-      <p>- Muhammad Dandy Nugraha -</p>
+  document.querySelector(".card").innerHTML = `
+    <div style="padding: 20px;">
+      <h1 style="font-size: 50px;">🥳</h1>
+      <h1 style="color:#FFD700">Yeay! Makasih Ya!</h1>
+      <p style="color:white; font-size: 18px;">
+        Dandy emang dimaafin, tapi THR jangan lupa ya? 😂<br><br>
+        <b>Semoga harimu menyenangkan!</b>
+      </p>
+      <button onclick="location.reload()" style="background:white; color:black; margin-top:20px;">Main Lagi</button>
     </div>
   `;
+  // Tambahkan efek konfeti sederhana jika ingin (opsional)
+  document.body.style.background = "#1e3c72";
 });
