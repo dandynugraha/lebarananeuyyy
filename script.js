@@ -1,3 +1,6 @@
+const SUPABASE_URL = "https://akqsdkdrrkakvsoedabs.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrcXNka2Rycmtha3Zzb2VkYWJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMzUyMzcsImV4cCI6MjA4OTYxMTIzN30.D7U-K30-_P91orEvQkobX64_k1BVNhvqcqYUzImGGMY";
+
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const text = document.getElementById("text");
