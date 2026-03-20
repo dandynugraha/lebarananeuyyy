@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Permintaan Maaf v3.1 (Edisi Jahil) 🌙</title>
+    <title>Maaf Dari Dandy 🌙</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Montserrat:wght@900&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Montserrat:wght@400;700;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
     <style>
         :root {
-            --emerald: #008080;
-            --gold: #FFD700;
-            --bg: #f0f4f3;
-            --glass: rgba(255, 255, 255, 0.7);
+            --neon-gold: #FFD700;
+            --bg: #030305;
         }
 
         * {
@@ -24,151 +22,121 @@
 
         body {
             background-color: var(--bg);
-            /* Pola Latar Belakang Islami Samar */
-            background-image: url('https://www.transparenttextures.com/patterns/az-subtle.png');
-            min-height: 100dvh; /* FIX HP: Agar tidak kepotong */
+            background-image: 
+                radial-gradient(circle at 10% 20%, #1a1a2e 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, #16213e 0%, transparent 40%);
+            /* FIX HP: Menggunakan dvh agar tidak kepotong address bar browser */
+            min-height: 100dvh; 
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
-            color: #333;
-            padding: 15px;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden; /* Mencegah scroll ke samping */
+            color: white;
+            padding: 20px;
         }
 
         .container {
             position: relative;
             z-index: 10;
             width: 100%;
-            max-width: 420px;
-        }
-
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            padding: 35px 25px;
+            max-width: 450px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Tulisan Arab */
-        .arabic {
-            font-family: 'Amiri', serif;
-            font-size: 1.8rem;
-            color: var(--emerald);
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-            line-height: 1.5;
         }
 
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 1.3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem; /* Ukuran lebih pas di HP */
             margin-bottom: 20px;
-            letter-spacing: 1px;
-            color: #333;
-            text-transform: uppercase;
+            color: var(--neon-gold);
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            line-height: 1.2;
         }
 
-        .msg-box {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 18px;
+        .message-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px 20px;
             margin-bottom: 25px;
-            min-height: 140px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            min-height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
         }
 
         #text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #555;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #efefef;
         }
 
-        .highlight {
-            color: var(--emerald);
-            font-weight: 700;
-        }
-
+        /* Tombol Layout */
         .btn-group {
             display: flex;
-            flex-direction: column; /* HP Friendly: Susun kebawah di awal */
-            gap: 12px;
-            position: relative;
+            flex-direction: column; /* Tombol susun atas bawah di HP biar lega */
             align-items: center;
-            height: 120px; /* Ruang vertikal ekstra untuk tombol lari */
+            gap: 15px;
+            position: relative;
+            min-height: 120px;
         }
 
         button {
-            width: 100%;
+            width: 100%; /* Full width di HP biar jempol gampang klik */
             max-width: 280px;
-            padding: 14px;
+            padding: 15px;
             border-radius: 50px;
             border: none;
             font-family: 'Montserrat', sans-serif;
             font-weight: 900;
-            font-size: 0.9rem;
+            font-size: 1rem;
             cursor: pointer;
-            transition: 0.1s cubic-bezier(0.19, 1, 0.22, 1); /* Transisi cepat */
+            transition: 0.2s;
         }
 
         #yes {
-            background: var(--emerald);
-            color: white;
+            background: white;
+            color: black;
             z-index: 10;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
         }
 
-        #yes:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 128, 128, 0.3);
-        }
-
-        /* Tombol Ngeselin - Tetap Lari-lari */
         #no {
             background: #ff4757;
             color: white;
             z-index: 5;
-            position: relative; /* Akan berubah jadi fixed di JS saat interaksi */
+            /* Default position di awal */
+            position: relative; 
         }
 
-        /* Tampilan Sukses */
-        .success-mode h1 {
-            font-size: 2.5rem;
-            color: var(--emerald);
+        /* Styling Sukses */
+        .success-content h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            text-transform: none;
         }
 
         @media (min-width: 600px) {
-            .btn-group { flex-direction: row; justify-content: center; height: 60px; }
-            button { width: auto; min-width: 160px; }
-            h1 { font-size: 1.6rem; }
+            h1 { font-size: 2.2rem; }
+            .btn-group { flex-direction: row; } /* Di laptop tetap sampingan */
+            button { width: auto; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="card" id="mainCard">
-            <div class="arabic">تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ</div>
-            <h1>MOHON MAAF LAHIR BATIN</h1>
+        <div id="mainContent">
+            <h1>SISTEM MAAF<br>DANDY v3.0</h1>
             
-            <div class="msg-box">
+            <div class="message-container">
                 <p id="text">
-                    Halo Orang Baik! Aku <span class="highlight">Dandy Nugraha</span>.<br>
-                    Kalau selama ini aku ada salah yang disengaja maupun nggak... <br>
-                    <span class="highlight">Maafin aku ya?</span> 🥺✨
+                    Halo Orang Baik! Aku <b>Dandy Nugraha</b>. 
+                    Kalau aku ada salah (banyak kayaknya), dimaafin ya? 🙏✨<br><br>
+                    <i>Plis tekan tombol di bawah...</i>
                 </p>
             </div>
 
@@ -187,68 +155,57 @@
         const noBtn = document.getElementById('no');
         const yesBtn = document.getElementById('yes');
         const text = document.getElementById('text');
-        const mainCard = document.getElementById('mainCard');
+        const mainContent = document.getElementById('mainContent');
         const bgm = document.getElementById('bgm');
 
-        // Play Music on first click
         document.body.addEventListener('click', () => {
             bgm.play().catch(() => {});
         }, { once: true });
 
-        // TULISAN NGESELIN (Mengejek)
-        const trolling = [
-            "Eits, gak kena wlee! 😜",
-            "Yah, tombolnya kabur.. 🏃‍♂️",
-            "Nyerah aja, mending 'IYA' 😂",
-            "Coba klik lagi deh.. 😉",
-            "Tega banget sama Dandy.. 😭",
-            "Sistem menolak aksi 'GAK'!"
+        const trolls = [
+            "Yakin nih? 😢",
+            "Yah, tombolnya kabur! 🏃‍♂️",
+            "Klik 'IYA' aja kenapa..",
+            "Eits, gak bisa! 😜",
+            "Dandy nangis nih! 😭"
         ];
 
         function moveButton() {
-            // Ubah ke position fixed agar lari ke seluruh layar
             noBtn.style.position = 'fixed';
             noBtn.style.zIndex = "999";
             
-            // Kalkulasi posisi random super cepat
-            const padding = 20; // Jarak aman dari pinggir layar
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding * 2) + padding;
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding * 2) + padding;
+            // Jarak aman dari pinggir layar (50px)
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 100) + 50;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 100) + 50;
             
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
 
-            // GANTI TULISAN NGESELIN
-            text.innerHTML = `<span style="color:#ff4757; font-weight:700;">[ERROR]</span><br>${trolling[Math.floor(Math.random() * trolling.length)]}`;
+            text.innerHTML = `<b>[ERROR]</b> ${trolls[Math.floor(Math.random() * trolls.length)]}`;
         }
 
-        // Lari saat didekati (desktop) atau disentuh (mobile)
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Cegah klik asli di mobile
+            e.preventDefault();
             moveButton();
         });
 
         yesBtn.addEventListener('click', () => {
-            // Selebrasi Confetti Mewah
             confetti({
                 particleCount: 150,
                 spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#008080', '#ffffff', '#FFD700']
+                origin: { y: 0.6 }
             });
 
-            mainCard.innerHTML = `
-                <div class="success-mode" style="animation: fadeIn 1s">
-                    <div style="font-size: 5rem; margin-bottom:10px;">🌙✨</div>
-                    <h1 style="font-family:'Amiri'; font-size:2.5rem; margin-bottom:5px;">Makasih Ya!</h1>
-                    <p style="font-size: 1.1rem; color:#555; margin-bottom:20px;">
-                        Semoga ibadah kita diterima Allah SWT.<br>
-                        Dandy dimaafin lahir batin.
-                        <br><br>
-                        <b>Selamat Idul Fitri!</b>
+            mainContent.innerHTML = `
+                <div class="success-content" style="animation: bounce 1s">
+                    <div style="font-size: 5rem;">🚀💖</div>
+                    <h1>Makasih Ya!</h1>
+                    <p style="font-size: 1.2rem; margin-top:15px;">
+                        Sekarang Dandy tenang lahir batin.<br><br>
+                        <span style="color: var(--neon-gold);">SELAMAT LEBARAN! 🌙</span>
                     </p>
-                    <button onclick="location.reload()" style="background:rgba(0,128,128,0.1); color:var(--emerald); border:1px solid rgba(0,128,128,0.2); width:auto; padding:10px 30px;">Kembali</button>
+                    <button onclick="location.reload()" style="margin-top:30px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2);">Ulangi</button>
                 </div>
             `;
         });
