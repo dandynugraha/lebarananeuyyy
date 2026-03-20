@@ -36,18 +36,11 @@
             color: white;
         }
 
-        /* Ornamen Melayang */
-        .stars {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0;
-        }
-
         .container {
             position: relative;
             z-index: 10;
             width: 90%;
             max-width: 450px;
-            perspective: 1000px;
         }
 
         .card {
@@ -59,12 +52,12 @@
             padding: 40px 30px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            animation: cardEntrance 1s ease-out;
+            animation: cardEntrance 0.8s ease-out;
         }
 
         @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(50px) rotateX(-10deg); }
-            to { opacity: 1; transform: translateY(0) rotateX(0); }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .emoji-box {
@@ -75,18 +68,17 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-15px) rotate(5deg); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 15px;
-            background: linear-gradient(to right, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .message-box {
@@ -95,32 +87,25 @@
             border-radius: 20px;
             margin-bottom: 25px;
             min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         #text {
             font-size: 16px;
             line-height: 1.6;
-            color: #ddd;
-        }
-
-        .highlight {
-            color: var(--primary);
-            font-weight: 700;
+            color: #eee;
         }
 
         .btn-group {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 15px;
             position: relative;
-            height: 60px;
+            height: 80px; /* Ruang ekstra agar tombol lari tidak menabrak */
         }
 
         button {
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 50px;
             border: none;
             font-family: 'Montserrat', sans-serif;
@@ -128,40 +113,30 @@
             font-size: 14px;
             cursor: pointer;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         #yes {
             background: white;
             color: black;
-            z-index: 5;
-        }
-
-        #yes:hover {
-            transform: scale(1.1);
-            background: var(--primary);
+            z-index: 10;
+            position: relative;
         }
 
         #no {
             background: #ff4757;
             color: white;
-            position: absolute;
-            right: 20px;
-            white-space: nowrap;
+            z-index: 5;
+            position: relative; /* Berubah ke fixed via JS saat interaksi */
         }
 
-        /* Success State */
-        .success-title {
+        .success-content h1 {
             font-family: 'Caveat', cursive;
-            font-size: 45px !important;
-            color: var(--primary) !important;
-            -webkit-text-fill-color: initial !important;
+            font-size: 45px;
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
-
-    <div class="stars" id="stars"></div>
 
     <div class="container">
         <div class="card" id="mainCard">
@@ -170,9 +145,9 @@
             
             <div class="message-box">
                 <p id="text">
-                    Halo! Aku <span class="highlight">Dandy Nugraha</span>.<br>
-                    Kalau selama ini aku ada salah yang bikin kamu kesel, sengaja atau nggak... <br>
-                    <span class="highlight">Maafin aku ya?</span> 🥺✨
+                    Halo! Aku <b>Dandy Nugraha</b>.<br>
+                    Kalau aku ada salah yang disengaja atau nggak... <br>
+                    <b>Maafin aku ya?</b> ✨
                 </p>
             </div>
 
@@ -195,39 +170,37 @@
         const mainCard = document.getElementById('mainCard');
         const bgm = document.getElementById('bgm');
 
-        // Play Music on first click
+        // Play Musik
         document.body.addEventListener('click', () => {
             bgm.play().catch(() => {});
         }, { once: true });
 
         const jokes = [
-            "Yakin nih? 😢",
+            "Tega banget sih.. 😭",
             "Dandy nangis loh.. 😭",
-            "Tega banget sih.. 💔",
-            "Plisss maafin Dandy ✨",
-            "Nanti THR-nya hangus loh! 💸",
-            "Yah, kok ditolak? 😔",
-            "Gak bakal bisa keklik wlee! 😜"
+            "Yakin nih? 😢",
+            "Nanti THR-nya hangus! 💸",
+            "Gak bakal bisa keklik wlee! 😜",
+            "Yah, kok ditolak? 😔"
         ];
 
-        const emojis = ["🥺", "😔", "😭", "😢", "😩"];
+        const emojis = ["🥺", "😭", "😢", "😔", "😤"];
 
         function moveButton() {
-            // Kalkulasi posisi random yang tetap aman di layar
+            // Ubah ke fixed hanya saat mulai lari
+            noBtn.style.position = 'fixed';
+            
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 40);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 40);
             
-            noBtn.style.position = 'fixed';
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
             noBtn.style.zIndex = "999";
 
-            // Ganti teks dan emoji secara acak
             text.innerHTML = jokes[Math.floor(Math.random() * jokes.length)];
             emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
         }
 
-        // Event buat Desktop & Mobile
         noBtn.addEventListener('mouseover', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -235,52 +208,26 @@
         });
 
         yesBtn.addEventListener('click', () => {
-            // Efek Confetti
-            var duration = 5 * 1000;
-            var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+            // Ledakan Konfeti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
 
-            function randomInRange(min, max) {
-              return Math.random() * (max - min) + min;
-            }
-
-            var interval = setInterval(function() {
-              var timeLeft = animationEnd - Date.now();
-              if (timeLeft <= 0) return clearInterval(interval);
-              var particleCount = 50 * (timeLeft / duration);
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-              confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-            }, 250);
-
-            // Ganti isi Card
             mainCard.innerHTML = `
-                <div style="animation: float 2s infinite">
-                    <div style="font-size: 80px">💖</div>
-                    <h1 class="success-title">Yeayy! Makasih!</h1>
-                    <p style="font-size: 18px; color: white;">
-                        Kamu emang yang terbaik! <br>
-                        Sekarang Dandy tenang lahir batin. <br><br>
-                        <span style="color: var(--primary)">Selamat Lebaran! 🌙</span>
+                <div class="success-content">
+                    <div style="font-size: 80px; animation: float 2s infinite">💖</div>
+                    <h1>Yeayy! Makasih!</h1>
+                    <p style="font-size: 18px; margin-top:10px;">
+                        Kamu emang yang terbaik!<br>
+                        Sekarang Dandy tenang lahir batin.<br><br>
+                        <span style="color: #FFD700">Selamat Lebaran! 🌙</span>
                     </p>
-                    <button onclick="location.reload()" style="margin-top:20px; background: rgba(255,255,255,0.1); color: white; border: 1px solid white;">Main Lagi</button>
+                    <button onclick="location.reload()" style="margin-top:25px; background:rgba(255,255,255,0.1); color:white; border:1px solid white;">Main Lagi</button>
                 </div>
             `;
         });
-
-        // Efek Partikel Sederhana di Background
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 50; i++) {
-            const star = document.createElement('div');
-            star.style.position = 'absolute';
-            star.style.width = '2px';
-            star.style.height = '2px';
-            star.style.background = 'white';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.opacity = Math.random();
-            star.style.borderRadius = '50%';
-            starsContainer.appendChild(star);
-        }
     </script>
 </body>
 </html>
